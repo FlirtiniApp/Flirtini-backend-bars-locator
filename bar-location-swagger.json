@@ -1,0 +1,115 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Drinkini Location Service API",
+    "version": "1.0.0",
+    "description": "Basic API to fetch nearby bars and night clubs with walking info."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/bars": {
+      "get": {
+        "summary": "Get nearby bars and night clubs",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "description": "Latitude (default 39.4699)",
+            "required": false,
+            "schema": { "type": "number", "format": "float", "default": 39.4699 }
+          },
+          {
+            "name": "lng",
+            "in": "query",
+            "description": "Longitude (default -0.3763)",
+            "required": false,
+            "schema": { "type": "number", "format": "float", "default": -0.3763 }
+          },
+          {
+            "name": "range",
+            "in": "query",
+            "description": "Max walking range in km (1-10, default 1)",
+            "required": false,
+            "schema": { "type": "integer", "minimum": 1, "maximum": 10, "default": 1 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of bars within walking range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Bar" }
+                },
+                "example": [
+                  {
+                    "name": "Bar Los Picapiedra",
+                    "address": "Carrer dels Cavallers, 25, València",
+                    "rating": 4.8,
+                    "total_ratings": 3343,
+                    "price_level": "$",
+                    "place_id": "ChIJB8KvZ1JPYA0RhpmS790X85A",
+                    "location": { "lat": 39.4765308, "lng": -0.3777045 },
+                    "walking_distance": "0.9 km",
+                    "walking_duration": "13 mins"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Bar": {
+        "type": "object",
+        "required": [
+          "name", "address", "rating", "total_ratings",
+          "price_level", "place_id", "location",
+          "walking_distance", "walking_duration"
+        ],
+        "properties": {
+          "name": { "type": "string" },
+          "address": { "type": "string" },
+          "rating": { "type": "number", "format": "float" },
+          "total_ratings": { "type": "integer" },
+          "price_level": { "type": "string" },
+          "place_id": { "type": "string" },
+          "location": {
+            "type": "object",
+            "required": ["lat", "lng"],
+            "properties": {
+              "lat": { "type": "number", "format": "float" },
+              "lng": { "type": "number", "format": "float" }
+            }
+          },
+          "walking_distance": { "type": "string" },
+          "walking_duration": { "type": "string" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" },
+          "details": { "type": "string", "nullable": true }
+        }
+      }
+    }
+  }
+}

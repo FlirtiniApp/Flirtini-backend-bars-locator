@@ -1,0 +1,25 @@
+{
+  "name": "backend-bars-locator",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/FlirtiniApp/Backend-bars-locator#readme",
+  "bugs": {
+    "url": "https://github.com/FlirtiniApp/Backend-bars-locator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FlirtiniApp/Backend-bars-locator.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "node-fetch": "^2.7.0",
+    "nodemon": "^3.1.10"
+  }
+}
