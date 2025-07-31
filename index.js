@@ -1,8 +1,10 @@
 const express = require('express')
+const dotenv = require('dotenv')
 const app = express()
 const port = 3000
 
-const API_KEY = "AIzaSyDYZ7qUEd7KGzO3GL0ngHw3Zm7JFzOQ4q0"
+dotenv.config()
+const API_KEY = process.env.GOOGLE_API_KEY
 
 async function getWalkingRoute(origin, destination) {
   const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}&mode=walking&key=${API_KEY}`
